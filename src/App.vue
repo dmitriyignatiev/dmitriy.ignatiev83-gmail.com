@@ -32,7 +32,8 @@
  
 <script>
 import Gantt from './components/Gantt.vue';
- 
+import axios from "axios";
+
 export default {
   name: 'app',
   components: {Gantt},
@@ -41,12 +42,7 @@ export default {
       tasks: {
        
         data: [
-          {id: '1', text: 'Project #1', start_date: '2020-03-20', duration: 10, progress: 0.6},
-          {id: '2', text: 'Project #2', start_date: '2020-03-25', duration: 3, progress: 0.4},
-          // {id: 3, text: 'Task 1 ', start_date: '2020-03-25', duration: 2, progress:0.2},
-          //  {id: 't_2', text: 'child #1', start_date: '2020-03-20', duration: 3, progress: 0.6},
-          // {id: 5, text: 'Task 1 ', start_date: '2020-03-25', duration: 2, progress:0.2},
-          // {id: 't_1', text: 'Task 1 ', start_date: '2020-03-25', duration: 2, progress:0.2},
+ 
         ],
         delete_task:[{id: 5, text: 'Task 1 ', start_date: '2020-03-25', duration: 2, progress:0.2}],
         links: [
@@ -70,14 +66,32 @@ export default {
     }
   },
 
+ async created(){
+    try{
+      const res = await axios.get(`http://localhost:3000/data`);
+      
+      console.log("typeof" + typeof(res))
+      this.tasks.data = res.data;
+      console.log("axios" + res.data)
+
+
+    } catch(e){
+      console.error(e);
+    }
+
+  },
+
   methods: {
 
-    fIndex(){
+    async addTaskNew(newTask){
+      const res = await axios.post(`http://localhost:3000/data`,
+       {text: newTask.text})
+        console.log(res)
       
-
     },
 
-    AddTask()
+    // for testing purpose only
+    AddTask(task)
     {
       var taskId ={
               id:10,
@@ -86,6 +100,8 @@ export default {
               duration:28}
       alert(taskId)
       this.tasks.data.push(taskId)
+      let text = (task && task.text ? ` (${task.text})`: '')
+      console.log(text)
 
     },
 
@@ -111,12 +127,27 @@ export default {
       if(mode=='create'){
 
         
+        
 
         this.tasks.data.push({text:`${task.text}`,
                            id: `${task.id}`, 
                            duration:`${task.duration}`,
                            parent: "root",
                            })
+        const res = axios.post(`http://localhost:3000/data`,
+       {
+         id: `${task.id}`,
+         text: `${task.text}`, 
+         start_date: `${task.start_date}`,
+         end_date: `${task.end_date}`,
+         progress: `${task.progress}`,
+         duration:`${task.duration}`,
+       
+       })
+        console.log(res)
+
+        
+        
       }
       if(mode=='update'){
         // let my_dict = this.tasks.data
@@ -124,8 +155,6 @@ export default {
         console.log('this is index of task ' + ' ' + `${task.id}`)
         for (var i=0; i<this.tasks.data.length; i ++ ){
           if (this.tasks.data[i].id == `${task.id}`) {
-
-         
           this.tasks.data[i].text = `${task.text}`
           this.tasks.data[i].start_date = `${task.start_date}`
           this.tasks.data[i].duration = `${task.duration}`
@@ -165,6 +194,7 @@ export default {
 
     selectTask(task) {
       this.selectedTask = task
+      console.log("select")
     },
   }
 }

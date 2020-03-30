@@ -9,6 +9,8 @@
 <script>
 
 import {gantt} from 'dhtmlx-gantt';
+import axios from "axios"
+
 export default {
     name:'gantt',
     props:{
@@ -53,10 +55,33 @@ export default {
 
     gantt.init(this.$refs.gantt);
 
-// track changes        
-       
+
+  
+    
+   
+// track changes      
+
+        // const dd = this.$http.get("http://localhost:3000/data").then((response)=>console.log(typeof(response)))
+        // console.log('dsads' + dd)
+        
+        // axios.get('http://localhost:3000/data').then(response => console.log(response.data))
+        const dd = axios.get('http://localhost:3000/data').then(response => console.log(response.data))
+        console.log("this is dd" + dd)
+        const test = {"data": dd}
+        console.log("trgfg" + test)
+        
+        
+        
         gantt.parse(this.$props.tasks); 
         
+
+        
+        this.$http.get("http://localhost:3000/data").then((response)=>{
+            console.log(response.body)
+            gantt.parse(response);
+            
+        });
+
         gantt.createDataProcessor((entity, action, data, id) => {
         this.$emit(`${entity}-updated`, id, action, data);
 
