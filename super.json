@@ -2,43 +2,126 @@
   "data": [
     {
       "id": "1",
-      "text": "Project #Super111",
+      "text": "test1",
       "start_date": "01-04-2013",
       "duration": 18,
       "progress": 0.4,
-      "open": true
+      "open": true,
+      "resources": [
+        {
+          "name": ""
+        }
+      ],
+      "contruction_object": {
+        "id": "1",
+        "name": "Я тут",
+        "coordinates": "",
+        "attribute": {
+          "basicPoints": {
+            "name": "",
+            "coordinates": ""
+          },
+          "headquarters": {
+            "name": "",
+            "manager": ""
+          },
+          "contracts": [
+            {
+              "number": "",
+              "price": "",
+              "data": "",
+              "suppliers": [
+                {
+                  "name": "",
+                  "contacts": "",
+                  "manager": ""
+                }
+              ]
+            }
+          ],
+          "performing_work": {
+            "name": "",
+            "description": "",
+            "date_start": "",
+            "date_end": "",
+            "suppliers": [
+              {
+                "name": "",
+                "contacts": "",
+                "manager": ""
+              }
+            ]
+          }
+        }
+      }
     },
     {
       "id": "2",
-      "text": "Task #22321",
-      "start_date": "02-04-2013",
-      "duration": 8,
-      "progress": 0.6,
-      "parent": "1"
+      "text": "xsaxas",
+      "start_date": "01-04-2013",
+      "duration": 18,
+      "progress": 0.4,
+      "open": true,
+      "resources": [
+        {
+          "name": ""
+        }
+      ],
+      "contruction_object": {
+        "id": "1",
+        "name": "Я тут",
+        "coordinates": "",
+        "attribute": {
+          "basicPoints": {
+            "name": "",
+            "coordinates": ""
+          },
+          "headquarters": {
+            "name": "",
+            "manager": ""
+          },
+          "contracts": [
+            {
+              "number": "",
+              "price": "",
+              "data": "",
+              "suppliers": [
+                {
+                  "name": "",
+                  "contacts": "",
+                  "manager": ""
+                }
+              ]
+            }
+          ],
+          "performing_work": {
+            "name": "",
+            "description": "",
+            "date_start": "",
+            "date_end": "",
+            "suppliers": [
+              {
+                "name": "",
+                "contacts": "",
+                "manager": ""
+              }
+            ]
+          }
+        }
+      }
     },
     {
-      "id": "1585577332722",
-      "text": "Super One",
-      "start_date": "1902-09-04",
-      "end_date": "1909-12-05",
-      "progress": "0",
-      "duration": "2649"
-    },
-    {
-      "id": "1585577332729",
-      "text": "dfdsfsfdsfds",
+      "id": "1586716829736",
+      "text": "sdsadsa",
       "start_date": "1906-10-04",
       "end_date": "1906-10-05",
       "progress": "0",
-      "duration": "1"
-    },
-    {
-      "id": "1585577571341",
-      "text": "Я тут",
-      "start_date": "1906-10-04",
-      "end_date": "1906-10-05",
-      "progress": "0",
-      "duration": "1"
+      "duration": "1",
+      "Object": [
+        {
+          "name": "Я тут"
+        }
+      ]
     }
   ]
 }

@@ -1,10 +1,23 @@
-gantt.config.root_id = "root"; 
- 
-var tasks =  {
-    data:[
-      {id:1, text:"Project #2", start_date:"01-04-2013", duration:18, parent:"root"}, 
-      {id:2, text:"Task #1",    start_date:"02-04-2013", duration:8,  parent:1},
-      {id:3, text:"Task #2",    start_date:"11-04-2013", duration:8,  parent:1}
-    ],
-    links:[]
-};
+План инфра:
+
+
+Объект строительства: {id:"", name:"", coordinates:"", 
+attribute:{
+          Пункт базирования:{name: "", coordinates:""},
+          Штаб квартиры:{name: "", manager:""},
+          Контракты:[{number: "",
+          price:"", 
+          data:"",
+          suppliers:[{name:"", contacts:"", manager:""}] 
+          }],
+          Выполняемые_работы:{name:"", description:"", 
+                      date_start:"", date_end:"", 
+                      suppliers:[
+                        {{name:"", contacts:"", manager:""}}
+                      ]
+                        }
+          ]
+}
+
+
+var arr = [{ id: 1, name:"test" },{ id: 1, name:"testing"}, {id:2, name:"test"}];

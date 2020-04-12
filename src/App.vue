@@ -1,6 +1,14 @@
 {{ src/App.vue }}
 <template>
   <div class="container"><button @click='AddTask'>Add</button>
+
+  {{message}}
+  {{title}}
+  <Navbar  :friends="friends" :options="options" :opt="opt" 
+ 
+  :msg="message"
+  @messageChanged="message= $event"
+  v-on:changeTitle="updateTitle($event)"/>
     <div class="right-container">
       <div class="gantt-selected-info">
         <div v-if="selectedTask">
@@ -20,29 +28,52 @@
     </div>
     <gantt class="left-container" :tasks="tasks" 
       
+     
+
+
       @task-updated="logTaskUpdate"
       @link-updated="logLinkUpdate" 
       @task-selected="selectTask">
-
-      
 
     </gantt>
   </div>
 </template>
  
 <script>
+
 import Gantt from './components/Gantt.vue';
+import Navbar from './components/Navbar.vue';
+
 import axios from "axios";
+
+import {bus} from './main'
 
 export default {
   name: 'app',
-  components: {Gantt},
+  components: {
+    Gantt,
+    Navbar,
+
+    },
+
   data () {
     return {
+
+      friends:[
+        {name: "Dima"},
+         {name: "Olya"},
+      ],
+      options:[
+        {name: "One"},
+        {name: "Two"}
+
+      ],
+
+      opt:'',
+
       tasks: {
        
         data: [
- 
         ],
         delete_task:[{id: 5, text: 'Task 1 ', start_date: '2020-03-25', duration: 2, progress:0.2}],
         links: [
@@ -50,8 +81,15 @@ export default {
         ]
       },
       selectedTask: null,
-      messages: []
+      messages: [],
+
+      filter_n:"",
+
+      message: "this is a message",
+      title:""
     }
+
+
   },
 
   filters: {
@@ -79,9 +117,22 @@ export default {
       console.error(e);
     }
 
-  },
+    bus.$on('titleChanged', (data) => {
+            console.log(data)
+            this.filter_n = data
+
+  })
+ },
 
   methods: {
+
+    updateTitle:function(updated){
+      this.filter_task = updated
+    },
+
+    // updateTitle(updatedTitle){
+    //   this.filter_task = updatedTitle
+    // },
 
     async addTaskNew(newTask){
       const res = await axios.post(`http://localhost:3000/data`,
@@ -89,6 +140,7 @@ export default {
         console.log(res)
       
     },
+
 
     // for testing purpose only
     AddTask(task)
@@ -142,6 +194,9 @@ export default {
          end_date: `${task.end_date}`,
          progress: `${task.progress}`,
          duration:`${task.duration}`,
+         "Object": [{
+           "name": this.filter_n
+         }]
        
        })
         console.log(res)
@@ -175,15 +230,10 @@ export default {
         
         
       }
-
-        
-      
       
     },
 
-   
   
- 
     logLinkUpdate (id, mode, link) {
       let message = `Link ${mode}: ${id}`
       if (link) {
