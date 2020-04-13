@@ -7,18 +7,21 @@
             
 
         </div>
+         
+        <h3>Создать объект строительства</h3>
 
-                            <h1 @click="changeTitle">{{title}}</h1>
+        <form action="" v-on:submit.prevent>
+            <input type="text" v-model="new_object">
+            <input type="submit" value="Записать" v-on:click="submit" />
+        </form>
 
-        <h1>this is the props from App vue: {{msg}}</h1>
-        <input type="text" :value="msg" @input="changeMessage"/>
+        <h4>Выбрать объект строительства</h4>
+        <!-- <input type="text" :value="msg" @input="changeMessage"/> -->
         <span >{{messages}}</span>
 
-        
 
-
-        <select v-model="selected">
-                <option v-for="(ch, index) in op" :key="index" v-bind:value="ch.value">{{ch.text}}</option>
+        <select v-model="selected" @change="onChange($event)">
+                <option v-for="(obj, index) in constr_object" :key="index"  v-bind:value="obj">{{obj}}</option>
             </select>
      <span>Выбрано: {{selected}}</span>
     </ul>
@@ -30,7 +33,7 @@
 <script>
 
 import {bus} from '../main'
-
+import axios from "axios";
 export default {
     name: 'Navbar',
     props:['friends', 'options', 'opt', "msg"],
@@ -47,9 +50,32 @@ export default {
             ],
             messages: "",
 
-            title:"Previous title"
+            title:"Previous title",
+
+            constr_object:[],
+            new_object:""
+                
         }
     },
+
+    created(){
+
+        this.$http.get("http://localhost:3500/data").then((response)=>{
+            console.log("Navbar   ", response.data)
+            for(let i=0; i<response.data.length; i++){
+                this.constr_object.push(response.data[i].name)
+            }
+            
+        })
+        
+    
+
+    },
+
+  
+
+
+
     methods:{
         changeMessage(event){
             this.messages=event.tagret.value;
@@ -58,8 +84,27 @@ export default {
         changeTitle(){
             this.title="NewTitle"
             // this.$emit('changeTitle', 'Я тут')
-            this.title = 'Я тут'
-            bus.$emit("titleChanged", 'Я тут')
+            this.title = ''
+            bus.$emit("titleChanged", this.title)
+        },
+
+        onChange(event) {
+            
+            console.log(event.target.value)
+            this.title = event.target.value
+            bus.$emit("titleChanged", this.title)
+        },
+
+        submit(){
+            console.log(this.new_object)
+            const res = axios.post(`http://localhost:3500/data`, {
+                name:this.new_object
+               
+            })
+            console.log(res) 
+            this.constr_object.push(this.new_object)
+            this.new_object=""
+
         }
         
     }
@@ -74,14 +119,14 @@ nav{
 }
 
 nav ul{
-    padding: 0;
+    padding: 200;
     display: inline-block;
     list-style-type: none;
-    margin: 0;
+    margin: 200;
 }
 
 #nav {
-  height: 150px;
+  height: 250px;
   width: 100%;
   
 }

@@ -1,10 +1,7 @@
 {{ src/App.vue }}
 <template>
-  <div class="container"><button @click='AddTask'>Add</button>
-
-  {{message}}
-  {{title}}
-  <Navbar  :friends="friends" :options="options" :opt="opt" 
+  <div class="container">
+  <Navbar   :options="options" :opt="opt" 
  
   :msg="message"
   @messageChanged="message= $event"
@@ -27,14 +24,9 @@
       </ul>
     </div>
     <gantt class="left-container" :tasks="tasks" 
-      
-     
-
-
       @task-updated="logTaskUpdate"
       @link-updated="logLinkUpdate" 
       @task-selected="selectTask">
-
     </gantt>
   </div>
 </template>
@@ -194,11 +186,59 @@ export default {
          end_date: `${task.end_date}`,
          progress: `${task.progress}`,
          duration:`${task.duration}`,
-         "Object": [{
-           "name": this.filter_n
-         }]
+         
+      "open": true,
+      "resources": [
+        {
+          "name": ""
+        }
+      ],
+      "contruction_object": {
+        "id": "",
+        "name": this.filter_n ,
+        "coordinates": "",
+        "attribute": {
+          "basicPoints": {
+            "name": "",
+            "coordinates": ""
+          },
+          "headquarters": {
+            "name": "",
+            "manager": ""
+          },
+          "contracts": [
+            {
+              "number": "",
+              "price": "",
+              "data": "",
+              "suppliers": [
+                {
+                  "name": "",
+                  "contacts": "",
+                  "manager": ""
+                }
+              ]
+            }
+          ],
+          "performing_work": {
+            "name": "",
+            "description": "",
+            "date_start": "",
+            "date_end": "",
+            "suppliers": [
+              {
+                "name": "",
+                "contacts": "",
+                "manager": ""
+              }
+            ]
+          }
+        }
+      }
+    
        
        })
+        
         console.log(res)
 
         
@@ -215,18 +255,26 @@ export default {
           this.tasks.data[i].duration = `${task.duration}`
           this.tasks.data[i].end_date = `${task.end_date}`
           this.tasks.data[i].progress = `${task.progress}`
+         
         }
         }
-
-        
-
-    
-       
-      }if(mode==="delete"){
+        axios.put('axios.put(`http://localhost:3000/data/2',
+        {
+          text:  `${task.text}`
+         
+        }
+        )
+        console.log("UPDATEEEEEE")
+      }
+      
+      if(mode==="delete"){
         // console.log(`${task.id}`+ ' ' +  `${task.text}`)
           console.log('string')
           let tt = this.tasks.data.filter(t=>t.id!==`${task.id}`)
           this.tasks.data = tt
+          axios.delete(`http://localhost:3000/data/` + `${task.id}`);
+          
+
         
         
       }
